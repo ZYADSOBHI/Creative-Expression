@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاتيح الإبداع</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f9fc;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        .search-bar {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 25px;
+            font-size: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #45a049;
+        }
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        .category {
+            padding: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            flex: 1 1 calc(30% - 20px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        .category:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        .expression {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .expression h2 {
+            margin-top: 0;
+        }
+        .expression p {
+            line-height: 1.8;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>مفاتيح الإبداع</h1>
+    </header>
+    <div class="container">
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="ابحث عن تعبير...">
+            <button onclick="searchExpression()">بحث</button>
+        </div>
+        <div class="categories" id="categories"></div>
+        <div class="expression" id="expression" style="display: none;"></div>
+    </div>
+
+    <script>
+        const expressions = [
+            {
+                category: 'النظافة',
+                title: 'التعبير عن النظافة',
+                content: "النظافة: أساس الصحة والرقي..."
+            },
+            {
+                category: 'حرب أكتوبر',
+                title: 'التعبير عن حرب أكتوبر',
+                content: "حرب أكتوبر 1973: ملحمة الانتصار..."
+            },
+            {
+                category: 'العمل',
+                title: 'التعبير عن العمل',
+                content: 'العمل هو جوهر الحياة...'
+            },
+            {
+                category: 'بر الوالدين',
+                title: 'التعبير عن بر الوالدين',
+                content: 'بر الوالدين من أعظم القيم...'
+            },
+            {
+                category: 'الصداقة',
+                title: 'التعبير عن الصداقة',
+                content: 'الصداقة هي أحد أهم الروابط...'
+            },
+            {
+                category: 'التعليم',
+                title: 'التعبير عن التعليم',
+                content: 'التعليم هو العمود الفقري...'
+            }
+        ];
+
+        const categoriesContainer = document.getElementById('categories');
+        const expressionContainer = document.getElementById('expression');
+
+        function renderCategories() {
+            categoriesContainer.innerHTML = '';
+            const uniqueCategories = [...new Set(expressions.map(exp => exp.category))];
+            uniqueCategories.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'category';
+                categoryDiv.textContent = category;
+                categoryDiv.onclick = () => showExpression(category);
+                categoriesContainer.appendChild(categoryDiv);
+            });
+        }
+
+        function showExpression(category) {
+            const filteredExpressions = expressions.filter(exp => exp.category === category);
+            expressionContainer.style.display = 'block';
+            expressionContainer.innerHTML = filteredExpressions.map(exp => `<h2>${exp.title}</h2><p>${exp.content}</p>`).join('');
+        }
+
+        function searchExpression() {
+            const query = document.getElementById('search').value.trim();
+            const results = expressions.filter(exp => exp.title.includes(query) || exp.content.includes(query));
+            if (results.length > 0) {
+                expressionContainer.style.display = 'block';
+                expressionContainer.innerHTML = results.map(result => `<h2>${result.title}</h2><p>${result.content}</p>`).join('');
+            } else {
+                expressionContainer.style.display = 'block';
+                expressionContainer.innerHTML = '<p>لم يتم العثور على تعبير مطابق.</p>';
+            }
+        }
+
+        renderCategories();
+    </script>
+
+<div style="text-align:center;">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXX"
+         data-ad-slot="XXXXXXX"
+         data-ad-format="auto"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+ </div>
+ 
+</body>
+</html>
